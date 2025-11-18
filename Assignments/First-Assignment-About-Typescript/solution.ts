@@ -32,7 +32,6 @@ class Person {
 
   getDetails() {
     return `'Name: ${this.name}, Age: ${this.age}'`;
-    // return { Name: this.name, Age: this.age };
   }
 }
 
@@ -78,7 +77,7 @@ type array = number[] | string[];
 
 const getUniqueValues = (firstArray: array, secondArray: array): number[] => {
   let newArray: number[] = [];
-  // console.log(firstArray, secondArray)
+
   const firstNumArray = firstArray.map((val) =>
     typeof val === "string" ? parseInt(val) : val
   );
@@ -86,7 +85,6 @@ const getUniqueValues = (firstArray: array, secondArray: array): number[] => {
     typeof val === "string" ? parseInt(val) : val
   );
 
-  // console.log(firstNumArray, " ", seecondNumArray);
 
   firstNumArray.forEach((val) => newArray.push(val));
   seecondNumArray.forEach((val) => newArray.push(val));
