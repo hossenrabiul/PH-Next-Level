@@ -32,7 +32,5 @@ const users : generics2<{
     {
     name : 'robiul',
     age : '23',
-    },{
-        favouriteColor : 'green'
     }
 ]
