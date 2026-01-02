@@ -13,7 +13,7 @@ app.use(cors({
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.get('/', (req, res) => {
-    res.send("Hello world to the prisma project...")
+    res.send("Hello world welcome to the prisma project...")
 })
 
 app.use('/post', postRoute)
