@@ -1,4 +1,4 @@
-import { JWTPayload, success } from "better-auth/*";
+import { JWTPayload } from "better-auth/*";
 import { NextFunction, Request, Response } from "express";
 import { auth as betterAuth } from "../lib/auth";
 
@@ -8,6 +8,10 @@ declare global {
       user?: JWTPayload;
     }
   }
+}
+export enum userRole {
+  "USER" = "USER",
+  "ADMIN" = "ADMIN"
 }
 
 export const auth = (...roles: String[]) => {
