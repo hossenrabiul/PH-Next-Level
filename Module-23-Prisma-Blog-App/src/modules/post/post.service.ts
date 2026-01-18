@@ -1,4 +1,4 @@
-import { PostStatus } from "../../../generated/prisma/enums";
+import { CommentStatus, PostStatus } from "../../../generated/prisma/enums";
 import { PostWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 
@@ -126,6 +126,14 @@ const getAllPost = async ({
 };
 
 const getPostById = async (postId: string) => {
+  const postData = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+  if (!postData) {
+    throw new Error("No post was found!");
+  }
   const result = await prisma.$transaction(async (tx) => {
     await tx.post.update({
       where: {
@@ -174,18 +182,133 @@ const getPostById = async (postId: string) => {
   return result;
 };
 
-const getMyPost = async(authorId : string)=>{
-  return await prisma.post.findMany({
-    where : {
-      authorId : authorId
-    }
-  })
-}
+const getMyPost = async (authorId: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: authorId,
+      status: "ACTIVE",
+    },
+  });
+  if (!user) {
+    throw new Error("Your account is not active!");
+  }
+  const post = await prisma.post.findMany({
+    where: {
+      authorId: authorId,
+    },
+    include: {
+      comments: true,
+      _count: true,
+    },
+  });
 
+  const total = await prisma.post.count({
+    where: {
+      authorId: authorId,
+    },
+  });
+  return {
+    data: post,
+    total,
+  };
+};
+
+const updateMyPost = async (
+  isAdmin: boolean,
+  authorId: string,
+  data: { content?: string; isFeatured?: boolean },
+  postId: string
+) => {
+  const postData = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (!postData) {
+    throw new Error("Not post found!");
+  }
+  if (!isAdmin && postData?.authorId !== authorId) {
+    throw new Error("You are not the owner of the post");
+  }
+  if (!isAdmin) {
+    delete data.isFeatured;
+  }
+  return await prisma.post.update({
+    where: {
+      id: postData.id,
+    },
+    data: data,
+  });
+};
+
+const deletePost = async (
+  postId: string,
+  authorId: string,
+  isAdmin: boolean
+) => {
+  const postData = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+    select: {
+      id: true,
+      authorId: true,
+    },
+  });
+
+  if (!postData) {
+    throw new Error("Not post found!");
+  }
+  if (!isAdmin && postData?.authorId !== authorId) {
+    throw new Error("You are not the owner of the post");
+  }
+
+  return await prisma.post.delete({
+    where: {
+      id: postId,
+    },
+  });
+};
+
+const getStats = async () => {
+  return await prisma.$transaction(async (tx) => {
+    const [
+      totalPost,
+      publishedPost,
+      totalComment,
+      approvedComment,
+      rejectComment,
+      totalViews,
+    ] = await Promise.all([
+      await tx.post.count(),
+      await tx.post.count({ where: { status: PostStatus.PUBLISHED } }),
+      await tx.comment.count(),
+      await tx.comment.count({ where: { status: CommentStatus.APPROVED } }),
+      await tx.comment.count({ where: { status: CommentStatus.REJECT } }),
+      await tx.post.aggregate({
+        _sum: {
+          views: true,
+        },
+      }),
+    ]);
+    return {
+      totalPost,
+      publishedPost,
+      totalComment,
+      approvedComment,
+      rejectComment,
+      totalViews,
+    };
+  });
+};
 // Export all the function
 export const postServices = {
   getAllPost,
   createPost,
   getPostById,
   getMyPost,
+  updateMyPost,
+  deletePost,
+  getStats,
 };
