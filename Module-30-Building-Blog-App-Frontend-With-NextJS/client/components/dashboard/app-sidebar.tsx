@@ -2,7 +2,6 @@
 
 import { ChevronDown, Search, Settings } from "lucide-react";
 import { useState } from "react";
-
 import {
   Avatar,
   AvatarFallback,
@@ -32,12 +31,13 @@ import {
 import { cn } from "@/lib/utils";
 
 import { sidebarItems } from "./data";
+import Link from "next/link";
 
 export function AppSidebar() {
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
     {},
   );
-
+  
   const toggleExpanded = (title: string) => {
     setExpandedItems((prev) => ({
       ...prev,

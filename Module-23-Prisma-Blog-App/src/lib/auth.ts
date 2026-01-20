@@ -20,7 +20,7 @@ export const auth = betterAuth({
     provider: "postgresql", // or "mysql", "postgresql", ...etc
   }),
 
-  trustedOrigins: [process.env.API_URL!], //allowing client request
+  trustedOrigins: [process.env.API_URL!], // allowing client request
 
   // adding additional fields
   user: {

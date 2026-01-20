@@ -10,8 +10,8 @@ import { userRoute } from './modules/user/user.routes';
 import errorHandler from './middlewares/globalErrorHandler';
 import { notFound } from './middlewares/notFound';
 app.use(cors({
-    origin : process.env.API_URL,
-    
+    origin : process.env.API_URL, 
+    credentials : true,
 }))
 
 app.all("/api/auth/*splat", toNodeHandler(auth));

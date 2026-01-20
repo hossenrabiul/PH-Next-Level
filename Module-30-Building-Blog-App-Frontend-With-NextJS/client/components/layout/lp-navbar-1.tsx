@@ -60,9 +60,14 @@ export function LpNavbar1() {
           <NavMenuItems />
           <div className="flex items-center gap-2">
             <ModeToggle />
-            <Link href="#">
-              <Button>Get started</Button>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link href="/login">
+                <Button>Login</Button>
+              </Link>
+              <Link href="/register">
+                <Button>Sign Up</Button>
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -70,8 +75,11 @@ export function LpNavbar1() {
         {isMenuOpen && (
           <div className="flex w-full flex-col justify-end gap-5 pb-2.5 md:hidden">
             <NavMenuItems />
-            <Link href="#">
-              <Button className="w-full">Get started</Button>
+            <Link href="/login">
+              <Button className="w-full">Login</Button>
+            </Link>
+            <Link href="/register">
+              <Button className="w-full">Sign Up</Button>
             </Link>
           </div>
         )}
