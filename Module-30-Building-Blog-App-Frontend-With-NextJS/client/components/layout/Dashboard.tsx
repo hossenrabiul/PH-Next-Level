@@ -19,7 +19,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/dashboard/tabs";
 
-export default function Dashboard({role}) {
+export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("home");
 
   return (
@@ -45,9 +45,9 @@ export default function Dashboard({role}) {
       <SidebarProvider>
         <AppSidebar/>
         <SidebarInset>
-          {/* <AppHeader /> */}
+          <AppHeader />
           <main className="flex-1 p-4 md:p-6">
-            {/* <Tabs
+            <Tabs
               defaultValue="home"
               value={activeTab}
               onValueChange={setActiveTab}
@@ -124,8 +124,8 @@ export default function Dashboard({role}) {
                   </TabsContent>
                 </motion.div>
               </AnimatePresence>
-            </Tabs> */}
-            {role}
+            </Tabs>
+           
           </main>
         </SidebarInset>
       </SidebarProvider>

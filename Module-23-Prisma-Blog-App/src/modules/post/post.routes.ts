@@ -9,24 +9,24 @@ route.get("/getstats", postController.getStats);
 route.get(
   "/my-post",
   auth(userRole.ADMIN, userRole.USER),
-  postController.getMyPost
+  postController.getMyPost,
 );
 route.get("/:id", postController.getPostById);
 
 route.patch(
   "/update/:postId",
   auth(userRole.ADMIN, userRole.USER),
-  postController.updateMyPost
+  postController.updateMyPost,
 );
 route.post(
-  "/create",
+  "/",
   auth(userRole.ADMIN, userRole.USER),
-  postController.createPost
+  postController.createPost,
 );
 route.delete(
   "/:postId",
   auth(userRole.ADMIN, userRole.USER),
-  postController.deletePost
+  postController.deletePost,
 );
 
 export const postRoute = route;

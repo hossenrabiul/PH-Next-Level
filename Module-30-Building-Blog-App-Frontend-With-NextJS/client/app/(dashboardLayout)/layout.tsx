@@ -11,7 +11,7 @@ function DashboardLayout({
     role: "user",
   };
   return <div>
-    <Dashboard role={user}/>
+    <Dashboard/>
     {/* {userRole.role == "admin" ? admin : user} */}
     </div>;
 }

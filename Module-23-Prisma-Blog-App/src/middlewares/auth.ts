@@ -9,6 +9,7 @@ declare global {
     }
   }
 }
+
 export enum userRole {
   "USER" = "USER",
   "ADMIN" = "ADMIN"
@@ -45,7 +46,7 @@ export const auth = (...roles: String[]) => {
       console.log(session.user.role);
       return res.status(400).json({
         success: false,
-        message: "You have no access to create post",
+        message: "You have no access",
       });
     }
     next();
