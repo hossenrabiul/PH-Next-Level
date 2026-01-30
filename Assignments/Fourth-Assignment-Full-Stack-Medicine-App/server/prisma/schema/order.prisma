@@ -1,0 +1,21 @@
+model Order {
+    id          Int         @id @default(autoincrement())
+    curtomerId  String
+    status      OrderStatus @default(PENDING)
+    totalAmount Decimal
+
+    // relations
+    customer  User        @relation("customerOrders", fields: [curtomerId], references: [id])
+    orterItem OrderItem[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+    PENDING
+    PAID
+    SHIPPED
+    DELIVERED
+    CANCELLED
+}

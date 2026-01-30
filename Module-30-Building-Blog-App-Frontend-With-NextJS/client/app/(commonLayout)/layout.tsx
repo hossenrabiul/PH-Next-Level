@@ -3,6 +3,7 @@ import React from "react";
 
 function CommonLayout({ children }: { children: React.ReactNode }) {
   return (
+    
     <div>
       <LpNavbar1 />
       {children}

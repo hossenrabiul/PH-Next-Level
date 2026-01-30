@@ -9,6 +9,7 @@ import { commentRoute } from './modules/comment/comment.routes';
 import { userRoute } from './modules/user/user.routes';
 import errorHandler from './middlewares/globalErrorHandler';
 import { notFound } from './middlewares/notFound';
+
 app.use(cors({
     origin : process.env.API_URL, 
     credentials : true,

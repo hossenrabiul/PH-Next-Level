@@ -4,7 +4,7 @@ import { prisma } from "../../lib/prisma";
 
 const createPost = async (
   body: { title: string; content: string; tags: string[] },
-  id: string
+  id: string,
 ) => {
   const data = {
     title: body.title,
@@ -12,6 +12,7 @@ const createPost = async (
     tags: body.tags,
     authorId: id,
   };
+
   const result = await prisma.post.create({ data });
   return result;
 };
@@ -87,7 +88,7 @@ const getAllPost = async ({
     });
   }
   //   Callling the database
-  const results = await prisma.post.findMany({
+  const data = await prisma.post.findMany({
     take: limit,
     skip: skip,
     where: {
@@ -116,12 +117,11 @@ const getAllPost = async ({
       AND: addConditions,
     },
   });
-
+  const currentPage = page;
+  const totalPage = Math.ceil(total / limit);
   return {
-    data: results,
-    total,
-    currentPage: page,
-    totalPage: Math.ceil(total / limit),
+    data,
+    pagination: {limit, total, currentPage, totalPage },
   };
 };
 
@@ -217,7 +217,7 @@ const updateMyPost = async (
   isAdmin: boolean,
   authorId: string,
   data: { content?: string; isFeatured?: boolean },
-  postId: string
+  postId: string,
 ) => {
   const postData = await prisma.post.findUnique({
     where: {
@@ -245,7 +245,7 @@ const updateMyPost = async (
 const deletePost = async (
   postId: string,
   authorId: string,
-  isAdmin: boolean
+  isAdmin: boolean,
 ) => {
   const postData = await prisma.post.findUnique({
     where: {

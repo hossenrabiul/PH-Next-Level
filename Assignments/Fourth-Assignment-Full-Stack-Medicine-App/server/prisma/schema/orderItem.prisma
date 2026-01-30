@@ -1,0 +1,8 @@
+model OrderItem {
+    id         Int    @id @default(autoincrement())
+    orderId    Int    @unique
+    medicineId String @unique
+
+    order    Order    @relation(fields: [orderId], references: [id])
+    medicine Medicine @relation(fields: [medicineId], references: [id])
+}

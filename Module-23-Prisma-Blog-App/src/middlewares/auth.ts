@@ -20,7 +20,7 @@ export const auth = (...roles: String[]) => {
     const session = await betterAuth.api.getSession({
       headers: req.headers as any,
     });
-    // console.log(session);
+    // console.log("session", session);
     if (!session) {
       return res.status(400).json({
         success: false,

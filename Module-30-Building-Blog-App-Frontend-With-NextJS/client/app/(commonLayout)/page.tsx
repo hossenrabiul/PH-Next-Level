@@ -7,6 +7,7 @@ const options : optionsType = {
   cache : "no-store",
   revalidate : 10,
 }
+
 export default async function Home() {
   const { data } = await blogService.getBlogPost(searchParams, options);
   console.log(data);

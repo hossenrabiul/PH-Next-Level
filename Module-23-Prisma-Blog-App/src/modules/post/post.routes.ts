@@ -4,7 +4,7 @@ import { auth, userRole } from "../../middlewares/auth";
 
 const route = Router();
 
-route.get("/", auth(userRole.ADMIN), postController.getAllPost);
+route.get("/", auth(userRole.USER, userRole.ADMIN), postController.getAllPost);
 route.get("/getstats", postController.getStats);
 route.get(
   "/my-post",

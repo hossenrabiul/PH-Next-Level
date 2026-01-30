@@ -1,14 +1,10 @@
 import { routeType } from "@/types/routeType";
 
-export const adminRoute : routeType = {
-  items: [
+export const adminRoute: routeType = {
+  navItem: [
     {
-      name: "Login",
-      url: "/login",
-    },
-    {
-      name: "Register",
-      url: "/register",
+      title: "Admin Route",
+      items: [{ name: "Create Blog", url: "/login" }],
     },
   ],
 };
